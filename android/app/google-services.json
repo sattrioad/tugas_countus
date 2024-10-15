@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "102244948117",
+    "project_id": "countus-40b7e",
+    "storage_bucket": "countus-40b7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102244948117:android:d79d399378ef1a1d9d239c",
+        "android_client_info": {
+          "package_name": "com.example.satu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALUbX_6tlDPLBaRlSCmKi6P9BF6ta2aYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102244948117:android:704548027f6ad0c99d239c",
+        "android_client_info": {
+          "package_name": "com.satu.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALUbX_6tlDPLBaRlSCmKi6P9BF6ta2aYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
