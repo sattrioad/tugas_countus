@@ -3,6 +3,11 @@
 import 'package:flutter/material.dart';
 import 'landing_page.dart'; // Import file landing_page.dart
 import '../services/firebase_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'register_screen.dart';
+import 'forgetpassword.dart';
+
+
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -24,23 +29,60 @@ class _WelcomeState extends State<Welcome> {
 
     late final dynamic user;
     try {
-      user = await _authService.signInWithEmailAndPassword(
+      final user = await _authService.signInWithEmailAndPassword(
         emailController.text,
         passwordController.text,
       );
       if (user != null) {
         print('User logged in: ${user.email}');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LandingPage()));
+        // Tampilkan notifikasi sukses
+        _showNotification('Login berhasil', Colors.green);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LandingPage()));
       } else {
-        print('Login failed');
+        throw FirebaseAuthException(code: 'null-user');
       }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'Tidak ada pengguna dengan email ini.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Password yang dimasukkan salah.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Format email tidak valid.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'Akun pengguna ini telah dinonaktifkan.';
+          break;
+        case 'null-user':
+          errorMessage = 'Login Gagal';
+          break;
+        default:
+          errorMessage = 'Terjadi kesalahan: ${e.message}';
+      }
+      _showNotification(errorMessage, Colors.red);
+      print('Login error: $errorMessage');
     } catch (e) {
-      print(e);
+      _showNotification('Terjadi kesalahan yang tidak diketahui.', Colors.red);
+      print('Unexpected error: $e');
     } finally {
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  void _showNotification(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -137,6 +179,10 @@ class _WelcomeState extends State<Welcome> {
                   alignment: Alignment.centerLeft, // Align kiri
                   child: TextButton(
                     onPressed: () {
+                       Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ForgetPasswordScreen()),
+    );
                       // Fungsi untuk "Forgot Password"
                     },
                     child: Text(
@@ -183,6 +229,11 @@ class _WelcomeState extends State<Welcome> {
                 Center(
                   child: TextButton(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()),
+                      );
                       // Fungsi untuk navigasi ke halaman signup
                     },
                     child: Text(

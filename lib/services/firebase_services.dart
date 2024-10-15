@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:satu/screens/register_screen.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -7,7 +8,8 @@ class AuthService {
   User? get currentUser => _auth.currentUser;
 
   // Login dengan email dan password
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -21,9 +23,11 @@ class AuthService {
   }
 
   // Daftar dengan email dan password
-  Future<User?> registerWithEmailAndPassword(String email, String password) async {
+  Future<User?> registerWithEmailAndPassword(
+      String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -43,12 +47,15 @@ class AuthService {
     }
   }
 
-  // Reset Password
+  // Sign Up
+
+  // Fungsi untuk mengirim email reset password
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } catch (e) {
-      print("Error during password reset: ${e}");
+      print("Error during password reset: ${e.toString()}");
+      throw e; // Lempar exception agar bisa ditangkap di layar ForgetPasswordScreen
     }
   }
 
