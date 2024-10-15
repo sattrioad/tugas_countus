@@ -7,8 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
 import 'forgetpassword.dart';
 
-
-
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
 
@@ -179,10 +177,11 @@ class _WelcomeState extends State<Welcome> {
                   alignment: Alignment.centerLeft, // Align kiri
                   child: TextButton(
                     onPressed: () {
-                       Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ForgetPasswordScreen()),
-    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgetPasswordScreen()),
+                      );
                       // Fungsi untuk "Forgot Password"
                     },
                     child: Text(
